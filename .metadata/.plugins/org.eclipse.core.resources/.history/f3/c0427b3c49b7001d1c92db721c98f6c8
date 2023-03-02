@@ -1,0 +1,32 @@
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.model.EmployeeModel;
+import com.example.demo.service.EmployeeService;
+
+@RestController
+public class EmployeeController {
+	@Autowired
+	EmployeeService service;
+	@GetMapping("/getprefix/{prefix}")
+	public List<EmployeeModel>getNameByPrefix(@PathVariable("prefix")String prefix){
+		return service.getbyNameStartingWith(prefix);
+	}
+	@GetMapping("/getsuffix/{suffix}")
+	public List<EmployeeModel> getNameBySuffix(@PathVariable("suffix") String suffix) {
+		return service.getbyNameEndingWith(suffix);
+	}
+	@GetMapping("/or/{id}/{dept}")
+	public List<EmployeeModel>getNameByOr(String dept, long id) {
+		return service.getNameByOr(id,dept);
+	}
+	
+	
+
+}

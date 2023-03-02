@@ -1,0 +1,44 @@
+package com.example.demo.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.model.Family;
+import com.example.demo.repository.Repository;
+import com.example.demo.service.ApiService;
+@RestController
+public class ApiController {
+	@Autowired
+	Repository repo;
+	@Autowired
+	ApiService service;
+	
+	@GetMapping("/get")
+	List<Family> getAll() {
+		return repo.findAll();
+	}
+	
+	@PostMapping("/post")
+	public Family create(@RequestBody Family fm) {
+		return repo.save(fm);
+	}
+	
+	@PutMapping("/put")
+	public String update(@RequestBody Family fm) {
+		return service.updateDetails(fm);
+	}
+	
+	@DeleteMapping("/delete")
+	public String delete(@RequestParam int id) {
+		return service.deleteDetails(id);
+	}
+
+}
